@@ -1,0 +1,38 @@
+﻿@model LoginVM
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Login";
+}
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card p-4" style="min-width: 300px; max-width: 400px; width: 100%;">
+        <form method="post" asp-action="Login" asp-controller="Auth">
+            <h3 class="text-muted mb-1 text-center" style="font-size:20px;"> User Login</h3>
+            <hr />
+            <div asp-validation-summary="ModelOnly" class="text-danger"> </div>
+            <div class="mb-3">
+                <label class="mb-2" asp-for="Email"></label> <span class="text-danger">*</span>
+                <input type="email" id="email" class="form-control" asp-for="Email" autocomplete="Email" placeholder="Enter email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label class="mb-2" asp-for="Password"></label> <span class="text-danger">*</span>
+                <input type="password" id="password" class="form-control" asp-for="Password" placeholder="Enter password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="mb-3 justify-content-between">
+                <label>
+                    <input type="checkbox" id="rememberMe" asp-for="RememberMe" /> Remember Me
+                </label>
+                <div class="float-end">
+                    <button type="submit" id="btnLogin" class="btn btn-primary m-2">Login</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section scripts {
+    <partial name="_ValidationScriptsPartial.cshtml" />
+}

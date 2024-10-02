@@ -1,0 +1,130 @@
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+.navbar{
+    position:fixed;
+    top: 0;
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    right: 0;
+    height : 60px;
+    background-color: #fff;
+    z-index: 1000;
+    box-shadow : 0 2px 5px , rgba(0,0,0,0.1);
+}
+.footer {
+    position: fixed;
+    bottom: 0;
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    right: 0;
+    height: 40px; /* Adjust height according to your footer */
+    background-color: #fff; /* Example color */
+    z-index: 1000; /* Ensure it stays above other elements */
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1); /* Optional for some shadow */
+}
+.sidebar {
+    width: 260px;
+    height: 100%;
+    background-color: #002640;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding: 15px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h2 {
+   margin-bottom: 30px;
+   color: #5d7b91;
+}
+
+.sidebar hr {
+   border: none; /* Removes the default border style */
+   height: 1px;
+   background-color: #5d7b91; /* Sets a dark color for the horizontal rule */
+   margin-bottom: 20px; /* Adjust the space below the hr if needed */
+ }
+.sidebar ul {
+   list-style-type: none;
+   padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #5d7b91;
+}
+.submenu {
+    display: none;
+    padding-left: 0px;
+    list-style-type :none;
+}
+.submenu li{
+    margin-bottom:2px;
+}
+.submenu li a{
+    font-weight: normal;
+    font-size: 12px;
+    margin-left: 10px;
+    padding: 3px 0;
+    color: #5d7b91;
+}
+.has-submenu > a::after {
+    content: "\25BC";
+    float: right;
+    font-size: 12px;
+    margin-left: 5px;
+}
+.has-submenu.open > a::after{
+    transform: rotate(180deg);
+}
+
+a i {
+    margin-right: 8px;
+    color: #5d7b91;
+    font-size: 16px;
+}
+/* Main content styling */
+.content {
+    height: 100%;
+    position: fixed;
+    margin-left: 260px; /* Equal to the width of the sidebar */
+    padding: 20px;
+    width: calc(100% - 260px); /* Calculates the remaining width */
+}
+.main-content {
+    margin-top: 60px; /* Space for the navbar */
+    margin-bottom: 40px; /* Space for the footer */
+    height: calc(100vh - 100px); /* Full height minus navbar and footer height */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 20px; /* Optional padding */
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .content {
+        margin-left: 0;
+    }
+}

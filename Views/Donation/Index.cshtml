@@ -1,0 +1,59 @@
+﻿@model IEnumerable<FoodDonationWebApp.Models.Donation>
+
+@{
+    ViewData["Title"] = "Donations List";
+}
+
+<h2>Donations List</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Donor Name</th>
+            <th>Donor Address</th>
+            <th>Food Type</th>
+            <th>Quality</th>
+            <th>Expiration Date</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var donation in Model)
+        {
+            <tr>
+                <td>@donation.Donor?.FirstName  @donation.Donor?.LastName</td>
+                <td>@donation.Donor?.Address</td>
+                <td>@donation.FoodType</td>
+                <td>@donation.Quantity</td>
+                <td>@donation.ExpiraryDate?.ToString("d")</td>
+                <td>@donation.Status</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@donation.Id" class="btn btn-primary">Details</a>
+                
+                    @if(User.IsInRole("Admin")){
+                        <a asp-action="Edit" asp-route-id="@donation.Id" class="btn btn-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@donation.Id" class="btn btn-danger">Delete</a>
+
+                        @* Show "Assign Pickup" if status is Available or Pending *@
+                        @if (donation.Status == FoodDonationWebApp.Models.DonationStatus.Available)
+                        {
+                            <a asp-action="Create" asp-controller="PickupRequest" asp-route-donationId="@donation.Id" class="btn btn-info">Assign Pickup</a>
+                        }
+
+                        @* Show "Assign Drop" if status is Completed *@
+                        @if (donation.Status == FoodDonationWebApp.Models.DonationStatus.PickedUp)
+                        {
+                            <a asp-action="Drop" asp-controller="PickupRequest" asp-route-donationId="@donation.Id" class="btn btn-success">Assign Drop</a>
+                        }
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (User.IsInRole("Doner"))
+{
+    <a asp-action="Create" class="btn btn-success">Create New Donation</a>
+}
+

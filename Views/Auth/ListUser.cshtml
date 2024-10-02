@@ -1,0 +1,67 @@
+﻿@model IEnumerable<UserWithRolesVM>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "List of User";
+}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>List of Users</h2>
+    <a href="@Url.Action("Register", "Auth")" class="btn btn-primary">New User</a>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Phone Number</th>
+            <th>Address</th>
+            <th>Roles</th>
+            <th>Profile Picture</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var userWithRoles in Model)
+        {
+            <tr>
+                <td>@userWithRoles.User.Email</td>
+                <td>@userWithRoles.User.FirstName</td>
+                <td>@userWithRoles.User.LastName</td>
+                <td>@userWithRoles.User.PhoneNumber</td>
+                <td>@userWithRoles.User.Address</td>
+                <td>
+                    @foreach (var role in userWithRoles.Roles)
+                    {
+                        <span class="badge bg-primary">@role</span>
+                    }
+                </td>
+                <td>
+                    @if (!string.IsNullOrEmpty(userWithRoles.User.Profile))
+                    {
+                        <img src="~/@userWithRoles.User.Profile" alt="Profile Picture" style="width:40px;height:40px;" />
+                    }
+                    else
+                    {
+                        <span>No Picture</span>
+                    }
+                </td>
+                <td>
+                    <!-- View Button -->
+                    <a href="@Url.Action("View", "Auth", new { id = userWithRoles.User.Id })" class="btn btn-info btn-sm">View</a>
+
+                    <!-- Edit Button -->
+                    <a href="@Url.Action("Edit", "Auth", new { id = userWithRoles.User.Id })" class="btn btn-warning btn-sm">Edit</a>
+
+                    <!-- Delete Button -->
+                    <form action="@Url.Action("Delete", "Auth", new { id = userWithRoles.User.Id })" method="post" class="d-inline">
+                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
+                    </form>
+                </td>
+                
+            </tr>
+        }
+    </tbody>
+</table>

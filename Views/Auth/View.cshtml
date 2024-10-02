@@ -1,0 +1,40 @@
+﻿@model EditUserVM;
+
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<div class="container">
+    <div class="card mt-5">
+        <div class="card-body">
+            <h3 class="card-title text-center">@Model.FirstName @Model.LastName's Profile</h3>
+            <hr />
+            <div class="row">
+                <div class="col-md-4 text-center">
+                    <!-- Display user image -->
+                    <img src="/@Model.ProilePicture" class="img-fluid rounded-circle" alt="User Image" style="max-width: 200px;" />
+                </div>
+                <div class="col-md-8">
+                    <div class="mb-3">
+                        <strong>Email:</strong>
+                        <p>@Model.Email</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <strong>Phone Number:</strong>
+                        <p>@Model.PhoneNumber</p>
+                    </div>
+
+                    <div class="mb-3">
+                        <strong>Address:</strong>
+                        <p>@Model.Address</p>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="text-center">
+                <a href="/Auth/Edit/@Model.Email" class="btn btn-primary">Edit Profile</a>
+            </div>
+        </div>
+    </div>
+</div>

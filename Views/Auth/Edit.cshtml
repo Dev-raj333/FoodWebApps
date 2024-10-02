@@ -1,0 +1,93 @@
+﻿@model EditUserVM
+
+@{
+    ViewData["Title"] = "Edit User";
+}
+<div class="container">
+    <div class="card-body">
+        <h3 class="text-muted mb-4">Edit User</h3>
+        <hr />
+        <form asp-action="Edit" asp-controller="Auth" method="post" enctype="multipart/form-data" novalidate>
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <!-- Display existing First Name -->
+            <div class="mb-3">
+                <label asp-for="FirstName" class="form-label"></label>
+                <span class="text-danger">*</span>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+
+            <!-- Display existing Last Name -->
+            <div class="mb-3">
+                <label asp-for="LastName" class="form-label"></label>
+                <span class="text-danger">*</span>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+
+            <!-- Display existing Email -->
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label"></label>
+                <span class="text-danger">*</span>
+                <input asp-for="Email" class="form-control" autocomplete="email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+
+            <!-- Password fields are hidden in edit mode -->
+            @* @if (Model.IsEditMode == false)
+            {
+                <div class="mb-3">
+                    <label asp-for="Password" class="form-label"></label>
+                    <span class="text-danger">*</span>
+                    <input asp-for="Password" class="form-control" type="password" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="ConfirmPassword" class="form-label"></label>
+                    <span class="text-danger">*</span>
+                    <input asp-for="ConfirmPassword" class="form-control" type="password" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+            } *@
+
+            <!-- Display existing Address -->
+            <div class="mb-3">
+                <label asp-for="Address" class="form-label"></label>
+                <input asp-for="Address" class="form-control" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+
+            <!-- Display existing Phone Number -->
+            <div class="mb-3">
+                <label asp-for="PhoneNumber" class="form-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <!-- Display existing Role -->
+            <div class="mb-3">
+                <label asp-for="SelectedRole" class="form-label"></label>
+                <select asp-for="SelectedRole" class="form-control" asp-items="Model.Roles"></select>
+                <span asp-validation-for="SelectedRole" class="text-danger"></span>
+            </div>
+            <div class="mb-4">
+                <label asp-for="ProilePicture" class="form-label"></label>
+                <input asp-for="ProilePicture" class="form-control" type="file" />
+                <span asp-validation-for="ProilePicture"></span>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">Save Changes</button>
+
+            </div>
+        </form>
+    </div>
+    <div class="card-footer text-center">
+        <small class="text-muted">Fields marked with <span class="text-danger">*</span> are required.</small>
+    </div>
+</div>
+
+@section scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

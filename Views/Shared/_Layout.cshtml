@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FoodDonationWebApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/FoodDonationWebApp.styles.css" asp-append-version="true" />
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+
+    <!--Chartjs CDN-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+        @* Conditionally render the navbar if it's not the login page *@
+        @if (!(ViewContext.RouteData.Values["controller"].ToString() == "Auth"
+        && ViewContext.RouteData.Values["action"].ToString() == "Login"))
+        {
+            <div class="sidebar">
+                <h2>FoodDonation</h2>
+                <hr />
+                <ul>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>
+                            <a asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-tachometer-alt"></i> Admin Dashboard</a>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="#">Donation Management</a>
+                            <ul class="submenu">
+                                <li><a asp-area="" asp-controller="Donation" asp-action="Index">List Donations</a></li>
+                                <li><a asp-area="" asp-controller="PickupRequest" asp-action="Create">Assign Pickup</a></li>
+                                <li><a asp-area="" asp-controller="Home" asp-action="Policy">Assign Drop</a></li>
+                            </ul>
+                        </li>
+                        <li class="has-submenu">
+                            <a asp-controller="Auth" asp-action="List">Manage Users</a>
+                            <ul class="submenu">
+                                <li><a asp-area="" asp-controller="Auth" asp-action="Register">Add Users</a></li>
+                                <li><a asp-area="" asp-controller="Auth" asp-action="ListUser">View Users</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else if (User.IsInRole("Doner"))
+                    {
+                        <li>
+                            <a asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-tachometer-alt"></i> Doner Dashboard</a>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="#">Donations</a>
+                            <ul class="submenu">
+                                <li><a asp-area="" asp-controller="Donation" asp-action="Create">Create Donation</a></li>
+                                <li><a asp-area="" asp-controller="Donation" asp-action="Index">My Donations</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else if (User.IsInRole("Volunture"))
+                    {
+                        <li>
+                            <a asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-tachometer-alt"></i> Volunteer Dashboard</a>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="#">Tasks</a>
+                            <ul class="submenu">
+                                <li><a asp-area="" asp-controller="Volunteer" asp-action="ViewPickupTasks">Pickup Tasks</a></li>
+                                <li><a asp-area="" asp-controller="Volunteer" asp-action="ViewDropoffTasks">Dropoff Tasks</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else if (User.IsInRole("Recipient"))
+                    {
+                        <li>
+                            <a asp-area="" asp-controller="Home" asp-action="Index"><i class="fas fa-tachometer-alt"></i> Recipient Dashboard</a>
+                        </li>
+                        <li class="has-submenu">
+                            <a href="#">Requests</a>
+                            <ul class="submenu">
+                                <li><a asp-area="" asp-controller="Recipient" asp-action="RequestFood">Request Food</a></li>
+                                <li><a asp-area="" asp-controller="Recipient" asp-action="ViewRequests">My Requests</a></li>
+                            </ul>
+                        </li>
+                    }
+                    else
+                    {
+                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                        <li><a asp-area="" asp-controller="Auth" asp-action="Login">Login</a></li>
+                    }
+                </ul>
+            </div>
+
+            <div class="content">
+                <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                    <div class="container">
+                        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                            <ul class="navbar-nav flex-grow-1">
+                                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                                        aria-expanded="false" aria-label="Toggle navigation">
+                                    <span class="navbar-toggler-icon"></span>
+                                </button>
+                            </ul>
+                            <partial name="_LoginPartial" />
+                        </div>
+                    </div>
+                </nav>
+
+                <div class="main-content bg-light">
+                    <main role="main" class="pb-3">
+                        @RenderBody()
+                    </main>
+                </div>
+
+                <footer class="border-top footer text-muted">
+                    <div class="container">
+                        &copy; 2024 - FoodDonationWebApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    </div>
+                </footer>
+            </div>
+        }
+
+        else
+        {
+            <div class="container">
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </div>
+        }
+    
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
